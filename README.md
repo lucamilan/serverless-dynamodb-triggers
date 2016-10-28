@@ -10,4 +10,4 @@ Log into the AWS Console, go to your DynamoDB table and insert an item in the ta
 After go to CloudWatch you should see the event output in your Logs.
 
 ![CloudWatch]
-(https://www.evernote.com/l/AGhrDKT6GMpBMY_M9Jd-xn6mF9EKG73juP4)
+(http://www.evernote.com/shard/s104/sh/8bad2f59-06f6-4a20-9696-1ff21f1965f9/37588d5687a554b5e4d19fe10aaa98ca)
