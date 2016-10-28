@@ -1,0 +1,26 @@
+[
+    {
+        "Effect": "Allow",
+        "Action": [
+            "lambda:InvokeFunction"
+        ],
+        "Resource": "*"
+    }, {
+        "Effect": "Allow",
+        "Action": [
+            "dynamodb:*"
+        ],
+        "Resource": "*"
+    }, {
+        "Effect": "Allow",
+        "Action": [
+            "dynamodb:DescribeStream",
+            "dynamodb:GetRecords",
+            "dynamodb:GetShardIterator",
+            "dynamodb:ListStreams"
+        ],
+        "Resource": [
+            "*"
+        ]
+    }
+]
