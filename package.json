@@ -9,10 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^2.0.0",
-    "serverless-plugin-write-env-vars": "^1.0.1"
   },
   "devDependencies": {
-    "serverless": "^1.0.3"
   }
 }

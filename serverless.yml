@@ -1,17 +1,21 @@
 service: dynamo-triggers # NOTE: update this with your service name
 
-custom: ${file(./serverless.env.yml)}
-
 provider:
   name: aws
   runtime: nodejs4.3
   stage: dev
   region: eu-west-1
   iamRoleStatements:
-    $ref: ./resources/lambda-policy.json
-
-plugins:
-  - serverless-plugin-write-env-vars
+   - Effect: Allow
+     Action:
+      - dynamodb:GetRecords
+      - dynamodb:GetShardIterator
+      - dynamodb:DescribeStream
+      - dynamodb:ListStreams
+     Resource:
+       Fn::GetAtt: 
+        - Table
+        - StreamArn
 
 functions:
   print:
@@ -19,7 +23,31 @@ functions:
 
 resources:  
   Resources:
-    Event: 
-      $ref: ./resources/event.json
-    Table: 
-      $ref: ./resources/table.json
+    Table:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:service}-spike
+        AttributeDefinitions:
+        - AttributeName: "Identifier"
+          AttributeType: "S"
+        KeySchema:
+        - AttributeName: "Identifier"
+          KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
+    Event:
+      Type: AWS::Lambda::EventSourceMapping
+      Properties:
+        BatchSize: 10
+        EventSourceArn:
+          Fn::GetAtt:
+            - Table
+            - StreamArn      
+        FunctionName:
+          Fn::GetAtt:
+            - PrintLambdaFunction
+            - Arn
+        StartingPosition: TRIM_HORIZON

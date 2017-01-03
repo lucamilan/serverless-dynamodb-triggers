@@ -1,9 +1,0 @@
-{  
-  "Type": "AWS::Lambda::EventSourceMapping",
-  "Properties": {
-    "BatchSize": 10,
-    "EventSourceArn" : { "Fn::GetAtt" : ["Table", "StreamArn"] },
-    "FunctionName" : { "Fn::GetAtt" : ["PrintLambdaFunction", "Arn"] },
-    "StartingPosition" : "TRIM_HORIZON"
-  }
-}
